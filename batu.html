@@ -3,74 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>batu</title>
+    <title>Batu</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+            background: linear-gradient(135deg, #f39c12, #8e44ad);
             color: #fff;
+            overflow-x: hidden;
         }
         header {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
             text-align: center;
-            border-bottom: 2px solid #fff;
+            padding: 40px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         header h1 {
+            font-size: 3rem;
+            font-weight: bold;
             margin: 0;
-            font-size: 2.5rem;
+            animation: fadeIn 2s ease;
         }
         header p {
-            margin: 5px 0 0;
-            font-size: 1.2rem;
+            margin: 10px 0 0;
+            font-size: 1.5rem;
+            opacity: 0.9;
         }
         .container {
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 1000px;
+            margin: 40px auto;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .profile {
             text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         .profile img {
-            width: 300px;
+            width: 250px;
             height: auto;
-            border-radius: 15px;
-            border: 3px solid #fff;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.5);
+        }
+        .profile h2 {
+            margin: 20px 0 10px;
+            font-size: 2rem;
+            text-transform: uppercase;
+            color: #ffeaa7;
         }
         .profile p {
-            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #dfe6e9;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
             font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(to right, #e67e22, #d35400);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(to right, #d35400, #e67e22);
+            transform: scale(1.1);
         }
         footer {
             text-align: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            border-top: 2px solid #fff;
-            position: fixed;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
             bottom: 0;
             width: 100%;
+            font-size: 1rem;
+            border-top: 2px solid #fff;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>batu</h1>
-        <p>saksonic lütfen bana sakso çek.</p>
+        <h1>Batu's World</h1>
+        <p>Welcome to the future!</p>
     </header>
     <div class="container">
         <div class="profile">
-            <img src="https://cdn.discordapp.com/attachments/1299487376434790502/1307010454689677312/image.png?ex=6738bfd7&is=67376e57&hm=74c7d1ac4b1b2645bc1d8504fcffe60eccca9a545551c0d7f08a324758e938cd&" alt="Profile Picture">
-            <p></p>
+            <img src="https://cdn.discordapp.com/attachments/1299487376434790502/1307010454689677312/image.png?ex=6738bfd7&is=67376e57&hm=74c7d1ac4b1b2645bc1d8504fcffe60eccca9a545551c0d7f08a324758e938cd&" alt="Batu's Picture">
+            <h2>Batu</h2>
+            <p>saksonic lütfen bana sakso çek</p>
+            <button>/button>
         </div>
     </div>
     <footer>
-        <p>&copy; make a batu.</p>
+        <p>&copy; -Batu</p>
     </footer>
 </body>
 </html>
