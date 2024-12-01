@@ -3,52 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debugger Engelleme - PHP</title>
+    <title>F12 Engelleme</title>
     <script>
-        // Tarayıcı geliştirici araçlarını algılayan fonksiyon
-        var isConsoleOpen = false;
+        // Geliştirici araçlarının açık olup olmadığını tespit et
+        (function detectDevTools() {
+            let devToolsOpen = false;
 
-        function runPageBugger() {
-            console.clear();
-            debugger;
-            setTimeout(function() {
-                runPageBugger();
-            }, 500);
-        }
-
-        function killPageConsoleOpen() {
-            document.write('Hizmetimizi kullanmak için geliştirici araçlarını kapatın.');
-        }
-
-        (function devtoolsDetector() {
-            let devtoolsOpen = false;
-
-            function detectDevTools() {
+            function checkDevTools() {
                 const threshold = 160; // Konsolun genişlik/yükseklik eşiği
-                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                const isOpen = window.outerWidth - window.innerWidth > threshold ||
+                               window.outerHeight - window.innerHeight > threshold;
 
-                if (widthThreshold || heightThreshold) {
-                    if (!devtoolsOpen) {
-                        killPageConsoleOpen();
-                        runPageBugger();
-                        devtoolsOpen = true;
-                    }
-                } else {
-                    if (devtoolsOpen) {
-                        location.reload(true); // Sayfayı yenile
-                        devtoolsOpen = false;
-                    }
+                if (isOpen && !devToolsOpen) {
+                    devToolsOpen = true;
+                    document.body.innerHTML = "<h1>Geliştirici araçlarını kapatın!</h1>";
+                    setTimeout(() => {
+                        location.reload(); // Sayfayı yenile
+                    }, 1000);
+                } else if (!isOpen && devToolsOpen) {
+                    devToolsOpen = false;
                 }
             }
 
-            window.addEventListener('resize', detectDevTools);
-            detectDevTools(); // Sayfa yüklendiğinde kontrol et
+            window.addEventListener('resize', checkDevTools); // Pencere yeniden boyutlandırıldığında kontrol et
+            checkDevTools(); // Sayfa yüklendiğinde kontrol et
         })();
+
+        // F12 tuşunu devre dışı bırak
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "F12") {
+                alert("Geliştirici araçları devre dışı bırakıldı.");
+                event.preventDefault();
+            }
+        });
     </script>
 </head>
 <body>
-    <h1>PHP ile Debugger Engelleme</h1>
-    <p>Bu sayfa geliştirici araçları açıldığında tepki verecektir.</p>
+    <h1>Hoş Geldiniz</h1>
+    <p>Bu sayfa geliştirici araçlarını açmayı tespit eder.</p>
 </body>
 </html>
