@@ -3,43 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F12 Engelleme</title>
+    <title>Debugger ve Sağ Tık Engelleme</title>
     <script>
-        // Geliştirici araçlarının açık olup olmadığını tespit et
-        (function detectDevTools() {
-            let devToolsOpen = false;
-
-            function checkDevTools() {
-                const threshold = 160; // Konsolun genişlik/yükseklik eşiği
-                const isOpen = window.outerWidth - window.innerWidth > threshold ||
-                               window.outerHeight - window.innerHeight > threshold;
-
-                if (isOpen && !devToolsOpen) {
-                    devToolsOpen = true;
-                    document.body.innerHTML = "<h1>Geliştirici araçlarını kapatın!</h1>";
-                    setTimeout(() => {
-                        location.reload(); // Sayfayı yenile
-                    }, 1000);
-                } else if (!isOpen && devToolsOpen) {
-                    devToolsOpen = false;
-                }
-            }
-
-            window.addEventListener('resize', checkDevTools); // Pencere yeniden boyutlandırıldığında kontrol et
-            checkDevTools(); // Sayfa yüklendiğinde kontrol et
-        })();
-
-        // F12 tuşunu devre dışı bırak
-        document.addEventListener('keydown', function (event) {
-            if (event.key === "F12") {
-                alert("Geliştirici araçları devre dışı bırakıldı.");
-                event.preventDefault();
-            }
+        // Sağ tık menüsünü engelle
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+            alert("Sağ tık devre dışı bırakıldı.");
         });
+
+        // Sürekli debugger çağırarak geliştirici araçlarını etkisiz hale getir
+        (function blockDebugger() {
+            function preventDebugging() {
+                debugger; // Tarayıcıyı sürekli debug moduna alır
+                setTimeout(preventDebugging, 50); // Döngü sürekli devam eder
+            }
+            preventDebugging(); // İşlemi başlat
+        })();
     </script>
 </head>
 <body>
-    <h1>Hoş Geldiniz</h1>
-    <p>Bu sayfa geliştirici araçlarını açmayı tespit eder.</p>
+    <h1>Sağ Tık ve Geliştirici Araçları Engellendi</h1>
+    <p>Bu sayfada sağ tık ve geliştirici araçları kullanımını engellemeye çalışıyoruz.</p>
 </body>
 </html>
