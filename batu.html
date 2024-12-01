@@ -3,26 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debugger ve Sağ Tık Engelleme</title>
+    <title>Debugger Engelleme ve Erişim Kesme</title>
     <script>
-        // Sağ tık menüsünü engelle
-        document.addEventListener('contextmenu', function (event) {
-            event.preventDefault();
-            alert("Sağ tık devre dışı bırakıldı.");
-        });
+        // Kullanıcıyı geliştirici araçlarını açtığında sunucudan engelle
+        (function blockDebuggerAndAccess() {
+            let isDevToolsOpen = false;
 
-        // Sürekli debugger çağırarak geliştirici araçlarını etkisiz hale getir
-        (function blockDebugger() {
-            function preventDebugging() {
+            // Geliştirici araçlarını kontrol et
+            function checkDevTools() {
+                const threshold = 160; // Konsol genişlik/yükseklik eşiği
+                const isOpen = window.outerWidth - window.innerWidth > threshold ||
+                               window.outerHeight - window.innerHeight > threshold;
+
+                if (isOpen && !isDevToolsOpen) {
+                    isDevToolsOpen = true;
+                    // Sunucuya isteği göndererek kullanıcıyı engelle
+                    fetch('/block-user', { method: 'POST' })
+                        .then(() => {
+                            document.body.innerHTML = "<h1>Erişiminiz engellendi!</h1>";
+                        });
+                }
+            }
+
+            window.addEventListener('resize', checkDevTools);
+            checkDevTools();
+
+            // F5 ve sağ tık engelleme
+            document.addEventListener('keydown', function (event) {
+                if (event.key === "F5" || event.key === "r" && event.ctrlKey) {
+                    event.preventDefault();
+                    alert("Sayfa yenileme engellendi.");
+                }
+            });
+
+            // Sağ tık engelle
+            document.addEventListener('contextmenu', function (event) {
+                event.preventDefault();
+                alert("Sağ tık devre dışı bırakıldı.");
+            });
+
+            // Sürekli debugger engelle
+            (function preventDebugging() {
                 debugger; // Tarayıcıyı sürekli debug moduna alır
                 setTimeout(preventDebugging, 50); // Döngü sürekli devam eder
-            }
-            preventDebugging(); // İşlemi başlat
+            })();
         })();
     </script>
 </head>
 <body>
-    <h1>Sağ Tık ve Geliştirici Araçları Engellendi</h1>
-    <p>Bu sayfada sağ tık ve geliştirici araçları kullanımını engellemeye çalışıyoruz.</p>
+    <h1>Hoş Geldiniz!</h1>
+    <p>Bu sayfada F12 veya F5 ile işlem yapamazsınız.</p>
 </body>
 </html>
